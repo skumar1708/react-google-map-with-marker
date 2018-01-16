@@ -70,7 +70,7 @@ initMap() {
             this.state.favourites.filter(function(item, pos, self) {
                    return self.indexOf(item) == pos;
               }).map(function(val,x){
-                return <p key={x}>{val}</p>
+                return <p key={val+x}>{val}</p>
              })
           }
         </div>
