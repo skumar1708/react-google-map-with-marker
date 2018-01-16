@@ -51,7 +51,6 @@ initMap() {
         });
         google.maps.event.addListener(marker, 'click', (function(marker, i, self) {
           return function() {
-            console.log("State is", self);
             self.state.favourites.push(data.users[i].Name);
             self.setState(self.state);
             infowindow.setContent(`<h1>${data.users[i].Name}</h1><br/><p>${data.users[i].Address}</p>`);
