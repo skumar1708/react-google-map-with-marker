@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import data from '../store_directory'
+import { setTimeout } from 'timers';
 
 /*
 * Use this component as a launching-pad to build your functionality.
@@ -16,6 +18,7 @@ export default class YourComponent extends Component {
     window.initMap = this.initMap;
     // Asynchronously load the Google Maps script, passing in the callback reference
     this.loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyCVH8e45o3d-5qmykzdhGKd1-3xYua5D2A&callback=initMap')
+    console.log('Users is', data.users.length);
 }
 
   loadJS(src) {
@@ -27,21 +30,40 @@ export default class YourComponent extends Component {
   }
 
 initMap() {
-    let map = new google.maps.Map( window.document.getElementById("map"),{
-      zoom: 10,
-      center: new google.maps.LatLng(-33.92, 151.25),
+    var map = new google.maps.Map( window.document.getElementById("map"),{
+      zoom: 3,
+      center: new google.maps.LatLng(39.414805,-94.1166931),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
-   let marker = new google.maps.Marker({
-      position: new google.maps.LatLng(-33.92, 151.25),
-      map: map
-    });
-    let infowindow = new google.maps.InfoWindow();
-    google.maps.event.addListener(marker, 'click',function() {
-      infowindow.setContent("Sydney Temps");
-      infowindow.open(map, marker);
-    })
+  //  let marker = new google.maps.Marker({
+  //     position: new google.maps.LatLng(43.191797,-89.453478),
+  //     map: map
+  //   });
+    var infowindow = new google.maps.InfoWindow();
+    // google.maps.event.addListener(marker, 'click',function() {
+    //   infowindow.setContent("<h1>Mexico Temps</h1><br/>State");
+    //   infowindow.open(map, marker);
+    // })
+
+    var marker, i;
+
+    for (i = 0; i < data.users.length; i++) { 
+      if(data.users[i].Lat && data.users[i].Long){
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(data.users[i].Lat, data.users[i].Long),
+          map: map
+        });
+  
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(`<h1>${data.users[i].Name}</h1><br/><p>${data.users[i].Address}</p>`);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
+      }
+      
+    }
 }
   render() {
     return (
@@ -52,7 +74,6 @@ initMap() {
     );
   }
 }
-
 var divStyle = {
   border: 'red',
   borderWidth: 2,
