@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import data from '../store_directory'
-import { setTimeout } from 'timers';
+
 
 /*
 * Use this component as a launching-pad to build your functionality.
@@ -18,7 +18,6 @@ export default class YourComponent extends Component {
     window.initMap = this.initMap;
     // Asynchronously load the Google Maps script, passing in the callback reference
     this.loadJS('https://maps.googleapis.com/maps/api/js?key=AIzaSyCVH8e45o3d-5qmykzdhGKd1-3xYua5D2A&callback=initMap')
-    console.log('Users is', data.users.length);
 }
 
   loadJS(src) {
@@ -36,17 +35,7 @@ initMap() {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
-  //  let marker = new google.maps.Marker({
-  //     position: new google.maps.LatLng(43.191797,-89.453478),
-  //     map: map
-  //   });
-    var infowindow = new google.maps.InfoWindow();
-    // google.maps.event.addListener(marker, 'click',function() {
-    //   infowindow.setContent("<h1>Mexico Temps</h1><br/>State");
-    //   infowindow.open(map, marker);
-    // })
-
-    var marker, i;
+    var infowindow = new google.maps.InfoWindow(),marker, i;
 
     for (i = 0; i < data.users.length; i++) { 
       if(data.users[i].Lat && data.users[i].Long){
