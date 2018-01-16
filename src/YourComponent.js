@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import data from '../store_directory'
+import PropTypes from 'prop-types';
 
 
 /*
@@ -10,7 +11,6 @@ export default class YourComponent extends Component {
   constructor(props){
     super(props);
     this.loadJS = this.loadJS.bind(this);
-    this.updateState = this.updateState.bind(this);
     this.state = {
       favourites:[]
     }
@@ -30,9 +30,6 @@ export default class YourComponent extends Component {
     script.src = src;
     script.async = true;
     ref.parentNode.insertBefore(script, ref);
-  }
-  updateState(p){
-    console.log(p);
   }
 initMap() {
     var map = new google.maps.Map( window.document.getElementById("map"),{
@@ -91,4 +88,8 @@ var divStyle = {
 var mapStyle  = {
   height: '500px',
   width: '100%'
+}
+
+YourComponent.propTypes = {
+  favourites:PropTypes.array
 }
