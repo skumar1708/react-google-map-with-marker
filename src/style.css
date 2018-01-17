@@ -1,0 +1,20 @@
+.instruct{
+    border: 2px solid red;
+    padding: 20;
+}
+.map-style{
+    height: 500px;
+     width: 100%;
+}
+.fav-right{
+    float: right;
+    color: red;
+    font-size: 48px;
+    position: relative;
+}
+.fav-list{
+    position: absolute;
+    background-color: #fff;
+    right:12px;
+    z-index: 9999;
+}

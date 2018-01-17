@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import data from '../store_directory'
 import PropTypes from 'prop-types';
-
-
+import  './style.css';
 /*
 * Use this component as a launching-pad to build your functionality.
 *
@@ -12,10 +11,10 @@ export default class YourComponent extends Component {
     super(props);
     this.loadJS = this.loadJS.bind(this);
     this.state = {
-      favourites:[]
+      favourites:[],
+      showFav:false
     }
   }
-
   componentDidMount() {
     // Connect the initMap() function within this class to the global window context,
     // so Google Maps can invoke it
@@ -58,38 +57,35 @@ initMap() {
       
     }
 }
+  onFavClick(){
+    this.setState(
+      {
+        showFav: (this.state.showFav)?false:true
+      }
+    );
+  }
   render() {
+    let myFavs = this.state.favourites.filter(function(item, pos, self) {
+                    return self.indexOf(item) == pos;
+                });
     return (
-      <div style={divStyle}>
-        <h1> Put your solution here!</h1>
-        <div> 
-          <h3>My Favourite places</h3>
-
-          
-          {
-            this.state.favourites.filter(function(item, pos, self) {
-                   return self.indexOf(item) == pos;
-              }).map(function(val,x){
-                return <p key={val+x}>{val}</p>
-             })
-          }
-        </div>
-        <div id="map" style={mapStyle}></div>
+      <div className="instruct">
+        <h1> Put your solution here! <span className="fav-right"> Click Icon {myFavs.length >0  && myFavs.length}<i className="fa fa-heart" aria-hidden="true" onClick={this.onFavClick.bind(this)}></i> </span></h1>
+        {this.state.showFav &&
+            <div className="fav-list"> 
+            <h3>My Favourite places</h3>        
+            {
+              myFavs.map(function(val,x){
+                  return <p key={val+x}>{val}</p>
+              })
+            }
+          </div>
+        }
+        <div id="map" className="map-style"></div>
       </div>
     );
   }
 }
-var divStyle = {
-  border: 'red',
-  borderWidth: 2,
-  borderStyle: 'solid',
-  padding: 20
-};
-var mapStyle  = {
-  height: '500px',
-  width: '100%'
-}
-
 YourComponent.propTypes = {
   favourites:PropTypes.array
 }

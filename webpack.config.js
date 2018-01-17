@@ -12,18 +12,32 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/static/'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
-      include: path.join(__dirname, 'src')
+    loaders: [
+      {
+        test: /\.js$/,
+        use: [
+                {loader:'react-hot-loader'}, 
+                {
+                  loader:'babel-loader',
+                  query: {
+                    presets: ['es2015']
+                  }
+                }
+            ],
+        include: path.join(__dirname, 'src')
     },
     {
       test: /\.json$/,
       loader: 'json-loader'
-    }]
-  }
+    },
+    {
+      test: /\.css$/,
+      loaders: ['style-loader','css-loader']
+    }
+  ]
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+ ]
 };
