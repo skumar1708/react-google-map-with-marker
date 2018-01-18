@@ -17,4 +17,24 @@
     background-color: #fff;
     right:12px;
     z-index: 9999;
+    padding: 5px;
+    border: 1px solid;
+}
+
+.remove-fav{
+    display: inline;
+    padding: 0 8px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    background-color: #ccc;
+    cursor: pointer;
+}
+.remove-fav:hover{
+    background-color: #8c8484;
+}
+.remove-fav ~ p{
+    display: inline;
+}
+.fav-item-wrapper{
+    padding-bottom: 25px;
 }

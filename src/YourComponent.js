@@ -30,12 +30,12 @@ export default class YourComponent extends Component {
     script.async = true;
     ref.parentNode.insertBefore(script, ref);
   }
-initMap() {
-    var map = new google.maps.Map( window.document.getElementById("map"),{
-      zoom: 3,
-      center: new google.maps.LatLng(39.414805,-94.1166931),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
+  initMap() {
+      var map = new google.maps.Map( window.document.getElementById("map"),{
+        zoom: 3,
+        center: new google.maps.LatLng(39.414805,-94.1166931),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
    
     var infowindow = new google.maps.InfoWindow(),marker, i;
 
@@ -64,19 +64,29 @@ initMap() {
       }
     );
   }
+  removeFav(val){
+      let myFavs = this.state.favourites.filter(function(item, pos, self) {
+        return item !== val;
+      });
+      this.setState({
+        favourites: myFavs
+      });
+  }
   render() {
     let myFavs = this.state.favourites.filter(function(item, pos, self) {
                     return self.indexOf(item) == pos;
                 });
+    let that = this;
     return (
       <div className="instruct">
-        <h1> Put your solution here! <span className="fav-right"> Click Icon {myFavs.length >0  && myFavs.length}<i className="fa fa-heart" aria-hidden="true" onClick={this.onFavClick.bind(this)}></i> </span></h1>
+      <marquee>Click on Heart Icon Right to see List of Favourites Stores </marquee>
+        <h1> Put your solution here!<span className="fav-right">{myFavs.length >0  && myFavs.length}<i className="fa fa-heart" aria-hidden="true" onClick={this.onFavClick.bind(this)}></i> </span></h1>
         {this.state.showFav &&
             <div className="fav-list"> 
             <h3>My Favourite places</h3>        
             {
               myFavs.map(function(val,x){
-                  return <p key={val+x}>{val}</p>
+                  return <div key={val+x}  className="fav-item-wrapper"><div className="remove-fav" onClick={that.removeFav.bind(that,val)} div-data={val}>X</div><p>{val}</p></div>
               })
             }
           </div>
