@@ -12,6 +12,7 @@
     font-size: 48px;
     position: relative;
 }
+
 .fav-list{
     position: absolute;
     background-color: #fff;
@@ -19,6 +20,8 @@
     z-index: 9999;
     padding: 5px;
     border: 1px solid;
+	max-height: 300px;
+    overflow-y: auto;
 }
 
 .remove-fav{
@@ -37,4 +40,16 @@
 }
 .fav-item-wrapper{
     padding-bottom: 25px;
+}
+.hasfav-true{
+    display: initial;
+    font-size: 20px;
+    vertical-align: top;
+    padding: 2px 9px;
+    border: 1px solid;
+    border-radius: 16px;
+    float: right;
+}
+.hasfav-false{
+    display: none;
 }

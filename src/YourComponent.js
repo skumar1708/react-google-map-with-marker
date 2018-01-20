@@ -93,7 +93,7 @@ export default class YourComponent extends Component {
     return (
       <div className="instruct">
       <marquee>Click on Heart Icon Right to see List of Favourites Stores </marquee>
-        <h1> Put your solution here!111<span className="fav-right">{myFavs.length >0  && myFavs.length}<i className="fa fa-heart" aria-hidden="true" onClick={this.onFavClick.bind(this)}></i> </span></h1>
+        <h1> Put your solution here!111<span className="fav-right"><span className={'hasfav-'+(myFavs.length>0)}>{myFavs.length >0  && myFavs.length}</span><i className="fa fa-heart" aria-hidden="true" onClick={this.onFavClick.bind(this)}></i> </span></h1>
         {this.state.showFav &&
             <div className="fav-list"> 
             <h3>My Favourite places</h3>        
