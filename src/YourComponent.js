@@ -32,30 +32,43 @@ export default class YourComponent extends Component {
   }
   initMap() {
       var map = new google.maps.Map( window.document.getElementById("map"),{
-        zoom: 3,
-        center: new google.maps.LatLng(39.414805,-94.1166931),
+        zoom: 10,
+        center: new google.maps.LatLng(19.469558,-99.1162114),
         mapTypeId: google.maps.MapTypeId.ROADMAP
       });
    
     var infowindow = new google.maps.InfoWindow(),marker, i;
-
-    for (i = 0; i < data.users.length; i++) { 
-      if(data.users[i].Lat && data.users[i].Long){
-        marker = new google.maps.Marker({
-          position: new google.maps.LatLng(data.users[i].Lat, data.users[i].Long),
-          map: map
-        });
-        google.maps.event.addListener(marker, 'click', (function(marker, i, self) {
-          return function() {
-            self.state.favourites.push(data.users[i].Name);
-            self.setState(self.state);
-            infowindow.setContent(`<h1>${data.users[i].Name}</h1><br/><p>${data.users[i].Address}</p>`);
-            infowindow.open(map, marker);
-          }
-        })(marker, i,this));
+    let coords = [];
+    (function loop(i,marker,self){
+      let address = data.users[i].Address;
+      let geocoder = new google.maps.Geocoder();
+      geocoder.geocode({'address':address},function(results,status){
+        if(results.length > 0){
+          let latitude = results[0].geometry.location.lat();
+          let longitude = results[0].geometry.location.lng();
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(latitude, longitude),
+            map: map
+          });
+          google.maps.event.addListener(marker, 'click', (function(marker, i, self) {
+            return function() {
+              self.state.favourites.push(data.users[i].Name);
+              self.setState(self.state);
+              infowindow.setContent(`<h1>${data.users[i].Name}</h1><br/><p>${data.users[i].Address}</p>`);
+              infowindow.open(map, marker);
+            }
+          })(marker, i,self));
+        }
+        else{
+          coords.push(data.users[i]);
+        }
+      });
+      i++;
+      if (i < data.users.length)
+      {
+          setTimeout(function() { loop(i,marker,self); }, 1000);
       }
-      
-    }
+    })(0,marker,this);
 }
   onFavClick(){
     this.setState(
@@ -80,7 +93,7 @@ export default class YourComponent extends Component {
     return (
       <div className="instruct">
       <marquee>Click on Heart Icon Right to see List of Favourites Stores </marquee>
-        <h1> Put your solution here!<span className="fav-right">{myFavs.length >0  && myFavs.length}<i className="fa fa-heart" aria-hidden="true" onClick={this.onFavClick.bind(this)}></i> </span></h1>
+        <h1> Put your solution here!111<span className="fav-right">{myFavs.length >0  && myFavs.length}<i className="fa fa-heart" aria-hidden="true" onClick={this.onFavClick.bind(this)}></i> </span></h1>
         {this.state.showFav &&
             <div className="fav-list"> 
             <h3>My Favourite places</h3>        
