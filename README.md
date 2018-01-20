@@ -6,4 +6,5 @@ Follow below steps to run this application on local
 
 1. Clone this repo using <code>git clone https://github.com/skumar1708/react-google-map-with-marker.git</code>
 2. Go to <code>react-google-map-with-marker</code> directory and  run <code>npm install</code>
+3. once it install all the modules, than run <code>npm start</code>
 3. open http://localhost:3000 to see working application
